@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Question Quiz</title>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --light-color: #f8f9fa;
+            --dark-color: #2d3436;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f8f9fa;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 3px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .question:before {
+            content: "?";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: rgba(108, 92, 231, 0.1);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .question:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question p {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+        
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.1);
+            accent-color: var(--primary-color);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        label:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        button {
+            display: block;
+            width: 200px;
+            padding: 12px;
+            margin: 30px auto 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+        
+        .quiz-footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            margin-top: 15px;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        
+    </style>
+    
+    <script>
+        // Update progress as user answers questions
+        const questions = document.querySelectorAll('.question');
+        const progressBar = document.getElementById('progressBar');
+        const currentQuestion = document.getElementById('currentQuestion');
+        
+        questions.forEach((question, index) => {
+            const inputs = question.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    const answered = document.querySelectorAll('.question input:checked').length;
+                    progressBar.style.width = `${(answered / 10) * 100}%`;
+                    currentQuestion.textContent = Math.min(answered + 1, 10);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="quiz-header">
+        <h1>Personality Type Quiz</h1>
+        <p class="subtitle">Discover your personality traits through these 10 questions</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <p><strong>There are no wrong answers.</strong></p>
+        </div>
+    </div>
+    
+    <form id="quizForm">
+        <div class="question">
+            <p>1. When making decisons you rely mostly on ?</p>
+            <input type="radio" name="q1" value="1"> a) Logic<br>
+            <input type="radio" name="q1" value="2"> b) Experience<br>
+            <input type="radio" name="q1" value="3"> c) Intuition<br>
+            <input type="radio" name="q1" value="4"> d) Emotions
+        </div>
+
+        <div class="question">
+            <p>2. You are more productive when?</p>
+            <input type="radio" name="q2" value="1"> a) You're alone<br>
+            <input type="radio" name="q2" value="2"> b) You're working in a small group<br>
+            <input type="radio" name="q2" value="3"> c) You're in a structured enviroment<br>
+            <input type="radio" name="q2" value="4"> d) You're in a creative,open setting
+        </div>
+
+        <div class="question">
+            <p>3. you usually express yourself?</p>
+            <input type="radio" name="q3" value="1"> a) Openly and confidently<br>
+            <input type="radio" name="q3" value="2"> b) Only when neccesary<br>
+            <input type="radio" name="q3" value="3"> c) Through writing or art<br>
+            <input type="radio" name="q3" value="4"> d) With hesitation
+        </div>
+
+        <div class="question">
+            <p>4. When planning something?</p>
+            <input type="radio" name="q4" value="1"> a) You create a detailed plan<br>
+            <input type="radio" name="q4" value="2"> b) You outline the basics<br>
+            <input type="radio" name="q4" value="3"> c) You keep it flexible<br>
+            <input type="radio" name="q4" value="4"> d) You go with the flow
+        </div>
+
+        <div class="question">
+            <p>5. You prefer to learn?</p>
+            <input type="radio" name="q5" value="1"> a) Through practical experience<br>
+            <input type="radio" name="q5" value="2"> b) By reading and watchig videos<br>
+            <input type="radio" name="q5" value="3"> c) Through trial and error<br>
+            <input type="radio" name="q5" value="4"> d) Through structured lessons
+        </div>
+
+        <div class="question">
+            <p>6. In your friend group, you are the one who</p>
+            <input type="radio" name="q6" value="1"> a) Leads the plans<br>
+            <input type="radio" name="q6" value="2"> b) Mediates issues<br>
+            <input type="radio" name="q6" value="3"> c) Observes quietly<br>
+            <input type="radio" name="q6" value="4"> d) Brings in creative ideas
+        </div>
+
+        <div class="question">
+            <p>7. In conversations, you tend to?</p>
+            <input type="radio" name="q7" value="1"> a) Dominate the discussion<br>
+            <input type="radio" name="q7" value="2"> b) Share your thoughts when asked<br>
+            <input type="radio" name="q7" value="3"> c) Listen more than talk<br>
+            <input type="radio" name="q7" value="4"> d) Avoid deep talks
+        </div>
+
+        <div class="question">
+            <p>8. You handle conflicts by?</p>
+            <input type="radio" name="q8" value="1"> a) Addressing them directly<br>
+            <input type="radio" name="q8" value="2"> b) Addressing them directly<br>
+            <input type="radio" name="q8" value="3"> c) Avoiding confrontation<br>
+            <input type="radio" name="q8" value="4"> d) Bottling it up
+        </div>
+
+        <div class="question">
+            <p>9. Your workspace is usually?</p>
+            <input type="radio" name="q9" value="1"> a) Organized and tidy<br>
+            <input type="radio" name="q9" value="2"> b) Slightly messy<br>
+            <input type="radio" name="q9" value="3"> c) Very cluttered<br>
+            <input type="radio" name="q9" value="4"> d) Depends on your mood
+        </div>
+
+        <div class="question">
+            <p>10. People often describe you as?</p>
+            <input type="radio" name="q10" value="1"> a) Energetic and bold<br>
+            <input type="radio" name="q10" value="2"> b) Caring and thoughtful<br>
+            <input type="radio" name="q10" value="3"> c) Quiet and introspective<br>
+            <input type="radio" name="q10" value="4"> d) Creative and different
+        </div>
+
+        <button type="submit">Submit Quiz</button>
+    </form>
+
+</body>
+</html>

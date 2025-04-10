@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Question Quiz</title>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #346af4;
+            --light-color: #f8f9fa;
+            --dark-color: #2d3436;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f8f9fa;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 3px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .question:before {
+            content: "?";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: rgba(108, 92, 231, 0.1);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .question:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question p {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+        
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.1);
+            accent-color: var(--primary-color);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        label:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        button {
+            display: block;
+            width: 200px;
+            padding: 12px;
+            margin: 30px auto 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+        
+        .quiz-footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            margin-top: 15px;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        
+    </style>
+    
+    <script>
+        // Update progress as user answers questions
+        const questions = document.querySelectorAll('.question');
+        const progressBar = document.getElementById('progressBar');
+        const currentQuestion = document.getElementById('currentQuestion');
+        
+        questions.forEach((question, index) => {
+            const inputs = question.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    const answered = document.querySelectorAll('.question input:checked').length;
+                    progressBar.style.width = `${(answered / 10) * 100}%`;
+                    currentQuestion.textContent = Math.min(answered + 1, 10);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="quiz-header">
+        <h1>Academic Stress Quiz</h1>
+        <p class="subtitle">Check your Stress through these 10 questions</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+           <p><strong>There are no wrong answers.</strong></p>
+        </div>
+    </div>
+    
+    <form id="quizForm">
+        <div class="question">
+            <p>1.Do you feel overwhelmed with your academic workload?</p>
+            <input type="radio" name="q1" value="1"> a) Never<br>
+            <input type="radio" name="q1" value="2"> b) Occasionally<br>
+            <input type="radio" name="q1" value="3"> c) Frequently<br>
+            <input type="radio" name="q1" value="4"> d) Always
+        </div>
+
+        <div class="question">
+            <p>2. How often do you sleep well during exam periods?</p>
+            <input type="radio" name="q2" value="1"> a) Always<br>
+            <input type="radio" name="q2" value="2"> b) Sometimes<br>
+            <input type="radio" name="q2" value="3"> c) Rarely<br>
+            <input type="radio" name="q2" value="4"> d) Never
+        </div>
+
+        <div class="question">
+            <p>3. Do you find time for activities outside academics?</p>
+            <input type="radio" name="q3" value="1"> a) Easily<br>
+            <input type="radio" name="q3" value="2"> b) Sometimes<br>
+            <input type="radio" name="q3" value="3"> c) Rarely<br>
+            <input type="radio" name="q3" value="4"> d) Not at all
+        </div>
+
+        <div class="question">
+            <p>4. How do you react when a deadline is close?</p>
+            <input type="radio" name="q4" value="1"> a) Confident and prepared<br>
+            <input type="radio" name="q4" value="2"> b) Slightly anxious<br>
+            <input type="radio" name="q4" value="3"> c) Very anxious<br>
+            <input type="radio" name="q4" value="4"> d) Panic
+        </div>
+
+        <div class="question">
+            <p>5. How often do you compare yourself to other students academically?</p>
+            <input type="radio" name="q5" value="1"> a) Never<br>
+            <input type="radio" name="q5" value="2"> b) Occasionally<br>
+            <input type="radio" name="q5" value="3"> c) Frequently<br>
+            <input type="radio" name="q5" value="4"> d) Constantly
+        </div>
+
+        <div class="question">
+            <p>6. Do you feel pressure from family or peers to succeed?</p>
+            <input type="radio" name="q6" value="1"> a) No<br>
+            <input type="radio" name="q6" value="2"> b) A little<br>
+            <input type="radio" name="q6" value="3"> c) A lot<br>
+            <input type="radio" name="q6" value="4"> d) Overwhelmingly 
+        </div>
+
+        <div class="question">
+            <p>7. How is your focus during study sessions?</p>
+            <input type="radio" name="q7" value="1"> a) Sharp and consistent<br>
+            <input type="radio" name="q7" value="2"> b) Decent with small breaks<br>
+            <input type="radio" name="q7" value="3"> c) Frequently distracted<br>
+            <input type="radio" name="q7" value="4"> d) Extremly poor
+        </div>
+
+        <div class="question">
+            <p>8. Have your grades dropped recently</p>
+            <input type="radio" name="q8" value="1"> a) No<br>
+            <input type="radio" name="q8" value="2"> b) Slightly<br>
+            <input type="radio" name="q8" value="3"> c) Significantly<br>
+            <input type="radio" name="q8" value="4"> d) Yes, and it's worrying
+        </div>
+
+        <div class="question">
+            <p>9. Do you feel burned out or emotionally exhausted from academics?</p>
+            <input type="radio" name="q9" value="1"> a) Never<br>
+            <input type="radio" name="q9" value="2"> b) Occasionally<br>
+            <input type="radio" name="q9" value="3"> c) Frequently<br>
+            <input type="radio" name="q9" value="4"> d) All the time
+        </div>
+
+        <div class="question">
+            <p>10. Do you get physical symptoms (headache, stomachache, insomnia) from stress?</p>
+            <input type="radio" name="q10" value="1"> a) Never<br>
+            <input type="radio" name="q10" value="2"> b) Rarely<br>
+            <input type="radio" name="q10" value="3"> c) Often<br>
+            <input type="radio" name="q10" value="4"> d) Frequently (Immediate attention required)
+        </div>
+
+        <button type="submit">Submit Quiz</button>
+    </form>
+
+</body>
+</html>
