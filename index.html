@@ -274,98 +274,6 @@
 
     </section><!-- /About Section -->
 
-    <!-- Appointment Section -->
-    <section id="appointment" class="appointment section" style="position: relative;">
-      <!-- Blur Overlay -->
-      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: blur(2px); background: rgba(255, 255, 255, 0.1); z-index: 100; display: flex; align-items: center; justify-content: center;">
-        <div class="text-center" style="background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
-          <i class="bi bi-clock-history" style="font-size: 3rem; color: #1977cc;"></i>
-          <h2 style="margin-top: 1rem; color: #2c4964;">Coming Soon!</h2>
-          <p style="color: #666; max-width: 400px; margin: 1rem auto;">Our online appointment booking system is under development. We're working to provide you with a seamless booking experience.</p>
-        </div>
-      </div>
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Book an Appointment</h2>
-        <p>Schedule your mental health consultation with our experienced professionals</p>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
-          <div class="row">
-            <div class="col-md-4 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Full Name" required>
-            </div>
-            <div class="col-md-4 form-group mt-3 mt-md-0">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-            </div>
-            <div class="col-md-4 form-group mt-3 mt-md-0">
-              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone Number" required>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 form-group mt-3">
-              <input type="datetime-local" name="date" class="form-control datepicker" id="date" placeholder="Preferred Date & Time" required>
-            </div>
-            <div class="col-md-4 form-group mt-3">
-              <select name="consultation_type" id="consultation_type" class="form-select" required>
-                <option value="">Select Consultation Type</option>
-                <option value="Initial Consultation">Initial Consultation</option>
-                <option value="Follow-up Session">Follow-up Session</option>
-                <option value="Therapy Session">Therapy Session</option>
-                <option value="Medication Review">Medication Review</option>
-                <option value="Emergency Consultation">Emergency Consultation</option>
-              </select>
-            </div>
-            <div class="col-md-4 form-group mt-3">
-              <select name="specialist" id="specialist" class="form-select" required>
-                <option value="">Select Specialist Type</option>
-                <option value="Psychiatrist">Psychiatrist</option>
-                <option value="Psychologist">Psychologist</option>
-                <option value="Therapist">Therapist</option>
-                <option value="Counselor">Counselor</option>
-                <option value="Mental Health Nurse">Mental Health Nurse</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group mt-3">
-            <textarea class="form-control" name="reason" rows="5" placeholder="Briefly describe your reason for seeking consultation (This helps us better prepare for your visit)" required></textarea>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col-md-6 form-group">
-              <select name="preferred_mode" id="preferred_mode" class="form-select" required>
-                <option value="">Preferred Mode of Consultation</option>
-                <option value="In-Person">In-Person Visit</option>
-                <option value="Video">Video Consultation</option>
-                <option value="Phone">Phone Consultation</option>
-              </select>
-            </div>
-            <div class="col-md-6 form-group">
-              <select name="insurance" id="insurance" class="form-select">
-                <option value="">Do you have insurance? (Optional)</option>
-                <option value="Yes">Yes, I have insurance</option>
-                <option value="No">No, I'll self-pay</option>
-                <option value="Unsure">Not sure/Need guidance</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="mt-4">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your appointment request has been sent. We will contact you soon to confirm the details. Thank you!</div>
-            <div class="text-center"><button type="submit">Request Appointment</button></div>
-          </div>
-        </form>
-
-      </div>
-
-    </section><!-- /Appointment Section -->
-
     <!-- Departments Section -->
     <section id="departments" class="departments section">
 
@@ -626,6 +534,97 @@
         </div>
       </div>
     </section><!-- /Chatbot Section -->
+<!-- Appointment Section -->
+<section id="appointment" class="appointment section" style="position: relative;">
+  <!-- Blur Overlay -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: blur(2px); background: rgba(255, 255, 255, 0.1); z-index: 100; display: flex; align-items: center; justify-content: center;">
+    <div class="text-center" style="background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+      <i class="bi bi-clock-history" style="font-size: 3rem; color: #1977cc;"></i>
+      <h2 style="margin-top: 1rem; color: #2c4964;">Coming Soon!</h2>
+      <p style="color: #666; max-width: 400px; margin: 1rem auto;">Our online appointment booking system is under development. We're working to provide you with a seamless booking experience.</p>
+    </div>
+  </div>
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Book an Appointment</h2>
+    <p>Schedule your mental health consultation with our experienced professionals</p>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <input type="text" name="name" class="form-control" id="name" placeholder="Your Full Name" required>
+        </div>
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+        </div>
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone Number" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group mt-3">
+          <input type="datetime-local" name="date" class="form-control datepicker" id="date" placeholder="Preferred Date & Time" required>
+        </div>
+        <div class="col-md-4 form-group mt-3">
+          <select name="consultation_type" id="consultation_type" class="form-select" required>
+            <option value="">Select Consultation Type</option>
+            <option value="Initial Consultation">Initial Consultation</option>
+            <option value="Follow-up Session">Follow-up Session</option>
+            <option value="Therapy Session">Therapy Session</option>
+            <option value="Medication Review">Medication Review</option>
+            <option value="Emergency Consultation">Emergency Consultation</option>
+          </select>
+        </div>
+        <div class="col-md-4 form-group mt-3">
+          <select name="specialist" id="specialist" class="form-select" required>
+            <option value="">Select Specialist Type</option>
+            <option value="Psychiatrist">Psychiatrist</option>
+            <option value="Psychologist">Psychologist</option>
+            <option value="Therapist">Therapist</option>
+            <option value="Counselor">Counselor</option>
+            <option value="Mental Health Nurse">Mental Health Nurse</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group mt-3">
+        <textarea class="form-control" name="reason" rows="5" placeholder="Briefly describe your reason for seeking consultation (This helps us better prepare for your visit)" required></textarea>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6 form-group">
+          <select name="preferred_mode" id="preferred_mode" class="form-select" required>
+            <option value="">Preferred Mode of Consultation</option>
+            <option value="In-Person">In-Person Visit</option>
+            <option value="Video">Video Consultation</option>
+            <option value="Phone">Phone Consultation</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group">
+          <select name="insurance" id="insurance" class="form-select">
+            <option value="">Do you have insurance? (Optional)</option>
+            <option value="Yes">Yes, I have insurance</option>
+            <option value="No">No, I'll self-pay</option>
+            <option value="Unsure">Not sure/Need guidance</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="loading">Loading</div>
+        <div class="error-message"></div>
+        <div class="sent-message">Your appointment request has been sent. We will contact you soon to confirm the details. Thank you!</div>
+        <div class="text-center"><button type="submit">Request Appointment</button></div>
+      </div>
+    </form>
+
+  </div>
+
+</section><!-- /Appointment Section -->
 
     <!-- Doctors Section -->
     <section id="doctors" class="doctors section">
